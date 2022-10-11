@@ -73,15 +73,6 @@ for month in range(0, monthsToRun):
   else:
     negativeCashFlowCounter += 1
 
-
-# Logging
-# print(f'Negative Cash Flows: {negativeCashFlowCounter}')
-#   # Throw warning if cash flow goes negative
-# print(cashflow)
-# print(portfolioAssets)
-# locale.setlocale( locale.LC_ALL, 'en_US.UTF-8' )
-# print(locale.currency(portfolioAssets['Value'].sum(), grouping=True))
-
 sum_axis = portfolioAssets.groupby(['Month']).sum(numeric_only=True).cumsum()
 months_axis = portfolioAssets['Month'].unique()
 # Plots
