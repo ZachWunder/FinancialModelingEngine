@@ -14,7 +14,7 @@ Events describes the purchases and cashflow events you'll make over time. If it 
 Securities-backed line of credit(SBLOC) is a variable-rate, revolving line of credit backed by your securities portfolio. The interest rate is a spread over SOFR(secured overnight financing rate). The spread starts at around 3% APR for portfolios around $300,000 and can go down to as little as 0.5% APR for $5-10M portfolios. The amount you can withdraw is determined by your release percentage. The release percentage for blue chip stocks is around 50% and up to 90% for bonds.
 
 ## Why use a SBLOC?
-A SBLOC can be used to meet cash needs instead 
+A SBLOC can be used to meet liquidity needs instead of saving up cash. This means you can be continually investing cash.
 
 ## To run:
 `bokeh serve --show FinancialModelingEngine.py`
