@@ -1,4 +1,4 @@
-Month,Type,Name,ExternalCashFlow,Debt,MonthsFinanced,Asset
+Month,Type,Name,CashFlow,Debt,MonthsFinanced,Asset
 48,Expense,Buy Truck,0,30000,48,0
 72,Expense,Wedding,0,5000,48,0
 60,Buy Asset,Buy Property,0,150000,48,1
