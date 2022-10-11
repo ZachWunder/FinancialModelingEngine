@@ -1,4 +1,9 @@
 # Financial Modeling Engine
+## Variables
+yearsToRun = 50
+monthlyAssetAppreciation = 1.0083333
+debtYearlyInterest = .025
+
 import pandas as pd
 import locale
 from bokeh.layouts import row
@@ -7,7 +12,6 @@ from bokeh.models import ColumnDataSource, NumeralTickFormatter
 from bokeh.models import HoverTool
 bokeh_doc = curdoc()
 # Loop Conditions
-yearsToRun = 50
 monthsToRun = yearsToRun * 12
 # Initialize Base Conditions
 # Read in Exterior Cash Flow
@@ -16,10 +20,8 @@ cashflow.set_index('From')
 # Read in Portfolio Base (assets)
 portfolioAssets = pd.read_csv('./portfolioAssets.csv')
 portfolioAssets.set_index('Month')
-monthlyAppreciation = 1.0083333
 # Read in Events
 events = pd.read_csv('./events.csv')
-debtYearlyInterest = .025
 debtMonthlyInterest = debtYearlyInterest / 12
 
 debtDf = pd.DataFrame()
@@ -55,7 +57,7 @@ for month in range(0, monthsToRun):
 
   # Calculate New Portfolio Values
   # newInterestSeries = portfolioAssets['Value'].multiply(portfolioAssets['MonthlyAppreciation'])
-  appreciation = portfolioAssets['Value'].multiply(monthlyAppreciation).sum() - portfolioAssets['Value'].sum()
+  appreciation = portfolioAssets['Value'].multiply(monthlyAssetAppreciation).sum() - portfolioAssets['Value'].sum()
   a = pd.DataFrame([{
     'Month': month,
     'Name': f'Appreciation {month}',
