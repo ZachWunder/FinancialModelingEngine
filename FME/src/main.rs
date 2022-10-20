@@ -3,9 +3,11 @@ mod types;
 
 use types::{Event, Cashflow, Asset};
 
-const YEARS_TO_RUN: u32 = 70;
+const YEARS_TO_RUN: u32 = 70 * 12;
 // 8% divided monthly
 const MONTHLY_DEBT_INTEREST_RATE: f32 = 0.08 / 12.0;
+// 10% divided monthly
+const MONTHLY_ASSET_APPRECIATION: f32 = 0.10 / 12.0;
 
 fn main() {
     let events: Vec<Event> = utils::read_file("./inputs/events.csv");
@@ -36,8 +38,14 @@ fn main() {
                 }
             }
         }
-        // TODO
+        
         // Add monthly gains to portfolio
+        let mut totalPortfolioValue: f32 = 0.0;
+        for asset in portfolio {
+            totalPortfolioValue += asset.value
+        }
+        let monthly_gain = totalPortfolioValue * MONTHLY_ASSET_APPRECIATION;
+        portfolio.push( Asset { month: month, name: format!("Appreciation {}", month), value: monthly_gain })
         // TODO
         // Divert excess cashflow to portfolio (securities)
     }
