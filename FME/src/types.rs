@@ -22,3 +22,19 @@ pub struct Asset {
     pub name: String,
     pub value: f32
 }
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Debt {
+    pub month: u32,
+    pub amount: f32
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct MonthlyOutput {
+    pub month: u32,
+    pub portfolio_sum: i64,
+    pub debt_sum: i64,
+    pub cashflow_sum: i64
+}
+
+pub type Portfolio = Vec<Asset>;
