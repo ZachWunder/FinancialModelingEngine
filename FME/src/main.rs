@@ -1,10 +1,8 @@
 mod utils;
 mod types;
 
-use std::env;
-use std::fs;
+use std::{env, fs, io};
 use types::{Event, Cashflow, Asset, Portfolio, Debt, MonthlyOutput};
-use num_format::{Locale, ToFormattedString};
 
 const YEARS_TO_RUN: u32 = 20 * 12;
 // 8% divided monthly
@@ -23,6 +21,7 @@ fn main() {
     fs::create_dir_all(format!("../outputs/{}", &folder)).unwrap();
     let monthly_portfolio_sum_file = fs::File::create(format!("../outputs/{}/monthly_portfolio_sum.csv", &folder)).unwrap();
     let mut wtr = csv::Writer::from_writer(monthly_portfolio_sum_file);
+    let mut std_wtr = csv::Writer::from_writer(io::stdout());
     // Engine Loop
     for month in 0..YEARS_TO_RUN {
         // Handle Events
@@ -70,7 +69,9 @@ fn main() {
             cashflow_sum: monthly_excess_cashflow as i64
         };
 
-        wtr.serialize(output).unwrap();
+        wtr.serialize(&output).unwrap();
+        std_wtr.serialize(&output).unwrap();
     }
     wtr.flush().unwrap();
+    std_wtr.flush().unwrap()
 }
