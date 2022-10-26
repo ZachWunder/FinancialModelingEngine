@@ -1,4 +1,5 @@
 mod utils;
+mod engine;
 mod types;
 
 use std::{env, fs, io};
@@ -18,9 +19,6 @@ fn main() {
     let mut portfolio: Vec<Asset> = utils::read_file(format!("./inputs/{}/portfolio.csv", folder));
     let mut debt: Vec<Debt> = Vec::new();
 
-    fs::create_dir_all(format!("../outputs/{}", &folder)).unwrap();
-    let monthly_portfolio_sum_file = fs::File::create(format!("../outputs/{}/monthly_portfolio_sum.csv", &folder)).unwrap();
-    let mut wtr = csv::Writer::from_writer(monthly_portfolio_sum_file);
     let mut std_wtr = csv::Writer::from_writer(io::stdout());
     // Engine Loop
     for month in 0..YEARS_TO_RUN {
@@ -69,9 +67,7 @@ fn main() {
             cashflow_sum: monthly_excess_cashflow as i64
         };
 
-        wtr.serialize(&output).unwrap();
         std_wtr.serialize(&output).unwrap();
     }
-    wtr.flush().unwrap();
     std_wtr.flush().unwrap()
 }
