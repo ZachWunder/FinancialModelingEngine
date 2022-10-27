@@ -4,7 +4,6 @@
 Models the outcomes of a financial strategy that utilizes a SBLOC for all liquidity needs. Outputs graphs of portfolio value, cashflow, and debt over time. 
 
 ## Architecture
-`FinancialModelingEngine.py` contains the modeling engine. Variables like how many `yearsToRun`, `monthlyAssetAppreciation` and `debtYearlyInterest` can be configured here.
 `cashflow.csv`,`portfolioassets.csv`,`events.csv` contain the data for the engine to use.
 Cashflow describes our intial cashflow. Income and expenses.
 PortfolioAssets describes our initial portfolio conditions.
