@@ -1,12 +1,10 @@
 use crate::{Cashflow, Portfolio, Event, types::MonthlyOutput, Asset, Debt};
 use crate::{utils};
 
-pub fn run_engine(years_to_run: u32, mut cashflow: Vec<Cashflow>, events: Vec<Event>, mut assets: Portfolio ) -> Vec<MonthlyOutput> {
+pub fn run_engine(years_to_run: u32, yearly_debt_interest_rate: f32, yearly_asset_appreciation: f32, mut cashflow: Vec<Cashflow>, events: Vec<Event>, mut assets: Portfolio ) -> Vec<MonthlyOutput> {
   let months_to_run: u32 = years_to_run * 12;
-  // 8% divided monthly
-  const MONTHLY_DEBT_INTEREST_RATE: f32 = 0.08 / 12.0;
-  // 10% divided monthly
-  const MONTHLY_ASSET_APPRECIATION: f32 = 0.10 / 12.0;
+  let monthly_debt_interest_rate: f32 = yearly_debt_interest_rate / 12.0;
+  let monthly_asset_appreciation: f32 = yearly_asset_appreciation / 12.0;
 
   let mut debt: Vec<Debt> = Vec::new();
   let mut monthly_outputs: Vec<MonthlyOutput> = Vec::new();
@@ -26,7 +24,7 @@ pub fn run_engine(years_to_run: u32, mut cashflow: Vec<Cashflow>, events: Vec<Ev
               // Debt
               if current_event.debt != 0.0 {
                   debt.push(Debt { month: month, amount: current_event.debt });
-                  let interest_payment = current_event.debt * MONTHLY_DEBT_INTEREST_RATE;
+                  let interest_payment = current_event.debt * monthly_debt_interest_rate;
                   // Add interest payments (negative) to cashflow
                   cashflow.push( Cashflow { month: month, name: current_event.name.clone(), amount: -interest_payment });
               }
@@ -38,7 +36,7 @@ pub fn run_engine(years_to_run: u32, mut cashflow: Vec<Cashflow>, events: Vec<Ev
       for asset in &assets {
           total_portfolio_value += asset.value
       }
-      let monthly_gain = total_portfolio_value * MONTHLY_ASSET_APPRECIATION;
+      let monthly_gain = total_portfolio_value * monthly_asset_appreciation;
       assets.push( Asset { month: month, name: format!("Appreciation {}", month), value: monthly_gain });
 
       // Divert excess cashflow to assets (securities)
@@ -79,7 +77,7 @@ mod tests {
       let events = Vec::new();
       let assets = Vec::new();
 
-      let output = run_engine(5, cashflow, events, assets);
+      let output = run_engine(5, 0.1, 0.8, cashflow, events, assets);
       let last_month = output.last().unwrap();
       
       assert_eq!(last_month.portfolio_sum, 387_185);
@@ -107,7 +105,7 @@ mod tests {
       events.push(buy_property);
       let assets = Vec::new();
 
-      let output = run_engine(5, cashflow, events, assets);
+      let output = run_engine(5, 0.1, 0.8, cashflow, events, assets);
       let last_month = output.last().unwrap();
       
       assert_eq!(last_month.cashflow_sum, 4_800);
