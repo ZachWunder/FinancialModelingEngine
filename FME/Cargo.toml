@@ -1,6 +1,6 @@
 [package]
 name = "fme"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 license = "MIT"
 description = "A command-line program for modeling a SBLOC-based investment strategy."
