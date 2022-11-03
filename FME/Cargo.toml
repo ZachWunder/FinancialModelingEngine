@@ -5,7 +5,6 @@ edition = "2021"
 license = "MIT"
 description = "A Financial Modeling Engine command-line program for a SBLOC-cased investment strategy."
 repository = "https://github.com/ZachWunder/FinancialModelingEngine"
-readme = "README.md"
 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
